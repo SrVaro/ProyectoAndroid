@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name" translatable="false">AppQuiz</string>
+    <string name="title_activity_preguntas">Preguntas</string>
+    <string name="title_activity_resumen">Resumen</string>
+    <string name="title_activity_nueva_pregunta">Nueva pregunta</string>
+    <string name="descripcion">Desarrollado por Álvaro Luque Jiménez </string>
+
+
+    <string name="menu_acerca_de">Acerca de</string>
+    <string name="menu_buscar">Buscar</string>
+    <string name="menu_preguntas">Preguntas</string>
+    <string name="menu_configuracion">Configuracion</string>
+
+    <string name="titulo"> Titulo </string>
+    <string name="sin_preguntas"> No hay preguntas </string>
+    <string name="respuesta_correcta"> Respuesta correcta</string>
+    <string name="respuesta_incorrecta"> Respuesta incorrecta</string>
+    <string name="permisos_escritura_denegados"> Permisos de escritura denegados </string>
+    <string name="permisos_escritura_aceptados"> Permisos de escritura concedidos </string>
+    <string name="hint_nueva_categoria"> Nombre de la categoria </string>
+    <string name="cancelar"> Cancelar </string>
+    <string name="agregar"> Añadir </string>
+    <string name="aceptar"> Aceptar </string>
+
+    </resources>

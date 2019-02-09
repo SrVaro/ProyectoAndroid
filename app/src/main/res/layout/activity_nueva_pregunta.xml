@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Nueva_Pregunta"
+    android:id="@+id/constraintLayoutMainActivity">
+
+
+    <EditText
+        android:id="@+id/titulo"
+        android:layout_width="190dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="48dp"
+        android:ems="10"
+        android:hint="@string/titulo"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Spinner
+        android:id="@+id/categoria_spinner"
+        android:layout_width="136dp"
+        android:layout_height="35dp"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="24dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titulo" />
+
+    <EditText
+        android:id="@+id/respuesta_correcta"
+        android:layout_width="262dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="11dp"
+        android:layout_marginEnd="8dp"
+        android:ems="10"
+        android:hint="@string/respuesta_correcta"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/agregarCategoria" />
+
+    <EditText
+        android:id="@+id/respuesta_incorrecta1"
+        android:layout_width="265dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="17dp"
+        android:layout_marginEnd="8dp"
+        android:ems="10"
+        android:hint="@string/respuesta_incorrecta"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/respuesta_correcta" />
+
+    <EditText
+        android:id="@+id/respuesta_incorrecta2"
+        android:layout_width="273dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="17dp"
+        android:layout_marginEnd="8dp"
+        android:ems="10"
+        android:hint="@string/respuesta_incorrecta"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/respuesta_incorrecta1" />
+
+    <EditText
+        android:id="@+id/respuesta_incorrecta3"
+        android:layout_width="282dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="8dp"
+        android:ems="10"
+        android:hint="@string/respuesta_incorrecta"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/respuesta_incorrecta2" />
+
+    <Button
+        android:id="@+id/button_aceptar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="17dp"
+        android:layout_marginEnd="148dp"
+        android:text="@string/aceptar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/respuesta_incorrecta3" />
+
+    <Button
+        android:id="@+id/agregarCategoria"
+        android:layout_width="88dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="28dp"
+        android:text="@string/agregar"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/categoria_spinner" />
+
+    <Button
+        android:id="@+id/camara"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="72dp"
+        android:layout_marginTop="184dp"
+        android:text="Camara"
+        app:layout_constraintStart_toEndOf="@+id/agregarCategoria"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/galeria"
+        android:layout_width="wrap_content"
+        android:layout_height="47dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="184dp"
+        android:text="Galeria"
+        app:layout_constraintStart_toEndOf="@+id/camara"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/foto"
+        android:layout_width="85dp"
+        android:layout_height="90dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="3dp"
+        app:layout_constraintBottom_toTopOf="@+id/categoria_spinner"
+        app:layout_constraintStart_toEndOf="@+id/titulo"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1.0"
+        app:srcCompat="@mipmap/logo" />
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout"
+        android:layout_width="119dp"
+        android:layout_height="109dp"
+        android:layout_marginStart="42dp"
+        android:layout_marginTop="27dp"
+        android:layout_marginEnd="29dp"
+        android:layout_marginBottom="48dp"
+        app:layout_constraintBottom_toTopOf="@+id/camara"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/titulo"
+        app:layout_constraintTop_toTopOf="parent">
+
+    </RelativeLayout>
+
+</android.support.constraint.ConstraintLayout>
