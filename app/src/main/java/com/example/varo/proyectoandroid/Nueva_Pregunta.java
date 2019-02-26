@@ -214,22 +214,23 @@ public class Nueva_Pregunta extends AppCompatActivity implements View.OnClickLis
                     resIncorr3 = respuestaIncorrecta3.getText().toString();
                     categoria = categoriaSpinner.getSelectedItem().toString();
 
+                    ImageView iv= findViewById(R.id.foto);
+                    BitmapDrawable bmDr=(BitmapDrawable) iv.getDrawable();
+                    if (bmDr != null){
+                        bitmap=bmDr.getBitmap();
+                    }else{
+                        bitmap=null;
+                    }
+
+
 
                     // Si la app se encuentra en modo creacion, se crea una nueva pregunta y se guarda en el repositorio
                     if (editar == false) {
 
-                        BitmapDrawable drawable = (BitmapDrawable) imageViewFoto.getDrawable();
-
-                        if (drawable != null) {
-                            bitmap = drawable.getBitmap();
-                        } else {
-                            bitmap = null;
-                        }
-
                         Pregunta nuevaPregunta = new Pregunta(enunciado, categoria, resCorr,
                                 resIncorr1, resIncorr2, resIncorr3, conversorImagen64(bitmap));
 
-                        Repositorio.insertarPreguntaConFoto(nuevaPregunta, myContext);
+                        Repositorio.insertarPreguntaConFoto(myContext, nuevaPregunta);
 
                         finish();
 
@@ -237,13 +238,6 @@ public class Nueva_Pregunta extends AppCompatActivity implements View.OnClickLis
                     //Si la app se encuentra en modo edicion, se crea una nueva pregunta se actualiza la antigua en el repositorio
                     else {
 
-                        BitmapDrawable drawable = (BitmapDrawable) imageViewFoto.getDrawable();
-
-                        if (drawable != null) {
-                            bitmap = drawable.getBitmap();
-                        } else {
-                            bitmap = null;
-                        }
 
                         Pregunta preguntaActualizada = new Pregunta(enunciado, categoria, resCorr, resIncorr1, resIncorr2, resIncorr3, conversorImagen64(bitmap));
 

@@ -10,6 +10,8 @@
     <string name="menu_buscar">Buscar</string>
     <string name="menu_preguntas">Preguntas</string>
     <string name="menu_configuracion">Configuracion</string>
+    <string name="menu_importar">Importar</string>
+    <string name="menu_exportar">Exportar</string>
 
     <string name="titulo"> Titulo </string>
     <string name="sin_preguntas"> No hay preguntas </string>

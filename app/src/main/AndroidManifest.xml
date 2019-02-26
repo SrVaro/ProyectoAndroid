@@ -26,7 +26,13 @@
         <activity
             android:name=".Resumen"
             android:label="@string/title_activity_resumen"
-            android:theme="@style/Theme.AppCompat.Light.DarkActionBar" />
+            android:theme="@style/Theme.AppCompat.Light.DarkActionBar">
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/*" />
+            </intent-filter>
+        </activity>
         <activity android:name=".AcercaDe" />
         <activity
             android:name=".Listado_Preguntas"
