@@ -76,8 +76,6 @@ public class Resumen extends AppCompatActivity {
             case R.id.action_importar:
                 Log.i("ActionBar", "Importar!");
 
-                importarXML();
-
                 return true;
 
             case R.id.action_exportar:
@@ -105,12 +103,14 @@ public class Resumen extends AppCompatActivity {
             verifyPermission();
         }
 
+
+
         preguntasTotales = findViewById(R.id.preguntasTotales);
 
         categoriasTotales = findViewById(R.id.categoriasTotales);
 
-        importarXML();
 
+        importarXML();
 
         }
 
@@ -128,13 +128,13 @@ public class Resumen extends AppCompatActivity {
     public void importarXML(){
 
         //Creamos las variables de la pregunta que vamos a importar
-        Pregunta pregunta;
+        Pregunta p;
         String enunciado="";
         String categoria="";
-        String respuestaCorrecta="";
-        String respuestaIncorrecta1="";
-        String respuestaIncorrecta2="";
-        String respuestaIncorrecta3="";
+        String correcta="";
+        String incorrecta="";
+        String incorrecta2="";
+        String incorrecta3="";
         String foto=null;
 
         int contador=0;
@@ -199,45 +199,50 @@ public class Resumen extends AppCompatActivity {
                                     }
 
                                     else if(contador==3){
-                                        respuestaCorrecta= parser.getText();
-                                        System.out.println("Correcta: "+ respuestaCorrecta);
+                                        correcta= parser.getText();
+                                        System.out.println("Correcta: "+ correcta);
                                         contador++;
 
                                     }
                                     else if(contador==4){
-                                        respuestaIncorrecta1= parser.getText();
-                                        System.out.println("Incorrecta1: "+ respuestaIncorrecta1);
+                                        incorrecta= parser.getText();
+                                        System.out.println("Incorrecta1: "+ incorrecta);
                                         contador++;
 
                                     }
                                     else if(contador==5){
-                                        respuestaIncorrecta2= parser.getText();
-                                        System.out.println("Incorrecta2: "+ respuestaIncorrecta2);
+                                        incorrecta2= parser.getText();
+                                        System.out.println("Incorrecta2: "+ incorrecta2);
 
 
                                         contador++;
 
                                     }
                                     else if(contador==6){
-                                        respuestaIncorrecta3= parser.getText();
-                                        System.out.println("Incorrecta3: "+ respuestaIncorrecta3);
+                                        incorrecta3= parser.getText();
+                                        System.out.println("Incorrecta3: "+ incorrecta3);
 
 
                                         //Como es el último dato que recuperamos de la pregunta la añadimos a la base de datos
 
                                         if(foto == null){
 
-                                            pregunta = new Pregunta(enunciado,categoria,respuestaCorrecta,respuestaIncorrecta1,respuestaIncorrecta2,respuestaIncorrecta3);
-                                            Repositorio.insertarPregunta(myContext, pregunta);
+                                            p= new Pregunta(enunciado,categoria,correcta,incorrecta,incorrecta2,incorrecta3);
+                                            Repositorio.insertarPregunta(myContext ,p);
+                                            System.out.println("Insertado correctamente en la BD");
 
                                         }else{
-                                            pregunta= new Pregunta(enunciado,categoria,respuestaCorrecta,respuestaIncorrecta1,respuestaIncorrecta2,respuestaIncorrecta3, foto);
-                                            Repositorio.insertarPreguntaConFoto(myContext, pregunta);
+                                            p= new Pregunta(enunciado,categoria,correcta,incorrecta,incorrecta2,incorrecta3, foto);
+                                            Repositorio.insertarPreguntaConFoto(myContext ,p);
+                                            System.out.println("Insertado correctamente en la BD");
 
                                         }
 
                                         contador=0;
 
+                                    }
+                                    else{
+                                        System.out.println("Error insertando a la BD");
                                     }
 
                                 }
@@ -256,7 +261,7 @@ public class Resumen extends AppCompatActivity {
                             case XmlPullParser.END_TAG:
                                 if(parser.getName().equals("question"))
                                 {
-                                    Log.w("XML","Finalizado el archivo");
+                                    System.out.println("Archivo finalizado");
                                 }
                                 break;
                         }
@@ -276,6 +281,7 @@ public class Resumen extends AppCompatActivity {
 
 
     }
+
 
 
 

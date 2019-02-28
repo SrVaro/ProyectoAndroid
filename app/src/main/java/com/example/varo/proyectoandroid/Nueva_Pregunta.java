@@ -193,9 +193,6 @@ public class Nueva_Pregunta extends AppCompatActivity implements View.OnClickLis
 
                 boolean camposVacios = false;
 
-                compruebaPermisosEscritura();
-
-
                 // Se comprueba que los campos de texto no estan vacios
                 camposVacios = NotEmpty(tituloPregunta, respuestaCorrecta, respuestaIncorrecta1, respuestaIncorrecta2, respuestaIncorrecta3);
 
@@ -415,8 +412,6 @@ public class Nueva_Pregunta extends AppCompatActivity implements View.OnClickLis
 
 
     private void takePicture() {
-
-        compruebaPermisosCamera();
 
         try {
 
