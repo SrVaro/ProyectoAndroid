@@ -179,8 +179,13 @@ public class Resumen extends AppCompatActivity {
                                 break;
 
                             case XmlPullParser.TEXT:
+
+                                System.out.println("tag: "+ tag);
+
                                 if(tag.equals("text"))
                                 {
+
+
 
                                     if(contador==0){
                                         categoria= parser.getText();
