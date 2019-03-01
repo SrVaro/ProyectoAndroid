@@ -112,7 +112,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="72dp"
         android:layout_marginTop="184dp"
-        android:text="Camara"
+        android:text="@string/camara"
         app:layout_constraintStart_toEndOf="@+id/agregarCategoria"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -122,7 +122,7 @@
         android:layout_height="47dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="184dp"
-        android:text="Galeria"
+        android:text="@string/galeria"
         app:layout_constraintStart_toEndOf="@+id/camara"
         app:layout_constraintTop_toTopOf="parent" />
 

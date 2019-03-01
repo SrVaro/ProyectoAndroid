@@ -234,8 +234,6 @@ public class Nueva_Pregunta extends AppCompatActivity implements View.OnClickLis
 
                         Repositorio.editarPregunta(myContext, preguntaActualizada);
 
-                        uri = null;
-
                         finish();
                     }
 
@@ -265,7 +263,7 @@ public class Nueva_Pregunta extends AppCompatActivity implements View.OnClickLis
                                         // Se añade la categoria introducida al ArrayList de categorias
                                         categorias.add(dialogInput.getText().toString());
 
-                                        // Se eliminan posibles categorias duplicados
+                                        // Se eliminan posibles categorias duplicadas de la lista
                                         HashSet<String> quitarDuplicados = new HashSet<>(categorias);
 
                                         categorias =  new ArrayList<>(quitarDuplicados);

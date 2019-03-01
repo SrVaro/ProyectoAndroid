@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="title_activity_preguntas">Questions</string>
+    <string name="title_activity_resumen">Summary</string>
+    <string name="title_activity_nueva_pregunta">New question</string>
+    <string name="descripcion">Developed by Álvaro Luque Jiménez </string>
+
+
+    <string name="menu_acerca_de">About</string>
+    <string name="menu_buscar">Search</string>
+    <string name="menu_preguntas">Questions</string>
+    <string name="menu_configuracion">Configuration</string>
+    <string name="menu_importar">Import</string>
+    <string name="menu_exportar">Export</string>
+
+    <string name="titulo"> Title </string>
+    <string name="sin_preguntas"> No questions </string>
+    <string name="respuesta_correcta"> Correct answer</string>
+    <string name="respuesta_incorrecta"> Incorrect answer</string>
+    <string name="permisos_escritura_denegados"> Denied writing permissions </string>
+    <string name="permisos_escritura_aceptados"> Denied reading permissions </string>
+    <string name="hint_nueva_categoria"> Name of the new category </string>
+    <string name="cancelar"> Cancel </string>
+    <string name="agregar"> Add </string>
+    <string name="aceptar"> Accept </string>
+
+    <string name="camara"> Camera </string>
+    <string name="galeria"> Gallery </string>
+
+</resources>

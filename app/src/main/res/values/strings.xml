@@ -1,5 +1,4 @@
 <resources>
-    <string name="app_name" translatable="false">AppQuiz</string>
     <string name="title_activity_preguntas">Preguntas</string>
     <string name="title_activity_resumen">Resumen</string>
     <string name="title_activity_nueva_pregunta">Nueva pregunta</string>
@@ -24,4 +23,9 @@
     <string name="agregar"> Añadir </string>
     <string name="aceptar"> Aceptar </string>
 
-    </resources>
+    <string name="camara"> Camara </string>
+    <string name="galeria"> Galeria </string>
+
+    <string name="app_name" translatable="false">App-Quiz</string>
+
+</resources>
