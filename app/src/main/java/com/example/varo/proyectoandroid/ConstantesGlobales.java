@@ -13,6 +13,7 @@ public class ConstantesGlobales {
 
     public static String codigoPregunta = "codigo";
 
+    public static String columnaCodigo = "codigo";
     public static String columnaEnunciado = "enunciado";
     public static String columnaCategoria = "categoria";
     public static String columnaRespuestaCorrecta = "respuestaCorrecta";

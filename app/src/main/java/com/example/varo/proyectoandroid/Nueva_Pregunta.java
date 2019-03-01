@@ -47,29 +47,29 @@ import java.util.HashSet;
 
 public class Nueva_Pregunta extends AppCompatActivity implements View.OnClickListener {
 
-    private String TAG = "DemoAndroidImages";
-    final private int CODE_WRITE_EXTERNAL_STORAGE_PERMISSION = ConstantesGlobales.CODE_WRITE_EXTERNAL_STORAGE_PERMISSION;
-    final private int CODE_CAMERA_PERMISSION = ConstantesGlobales.CODE_CAMERA_PERMISSION;
     private Context myContext;
-    ConstraintLayout constraint;
+
+    private ConstraintLayout constraint;
+
+    private Uri uri;
+
+    private Bitmap bitmap;
+
+    private ArrayAdapter<String> adapter;
+
+    private ArrayList<String> categorias;
+
     private static final int REQUEST_CAPTURE_IMAGE = 200;
     private static final int REQUEST_SELECT_IMAGE = 201;
 
     final String pathFotos = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/demoAndroid/";
-
-    private Uri uri;
-
-    private ArrayList<String> categorias = new ArrayList<>();
-
-    private Bitmap bitmap;
-
-    ArrayAdapter<String> adapter;
 
     private EditText tituloPregunta;
     private EditText respuestaCorrecta;
     private EditText respuestaIncorrecta1;
     private EditText respuestaIncorrecta2;
     private EditText respuestaIncorrecta3;
+
     private ImageView imageViewFoto;
 
     private Button botonAgregarCategoria;
@@ -83,16 +83,8 @@ public class Nueva_Pregunta extends AppCompatActivity implements View.OnClickLis
 
     private boolean editar;
 
-    String categoria = "";
-    String enunciado = "";
-    String resCorr = "";
-    String resIncorr1 = "";
-    String resIncorr2 = "";
-    String resIncorr3 = "";
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-
         getMenuInflater().inflate(R.menu.menu_general, menu);
         return true;
     }
@@ -125,9 +117,9 @@ public class Nueva_Pregunta extends AppCompatActivity implements View.OnClickLis
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        //-------------------------------------------------------------------------------------------//
+        /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-        // Se rellena el ArrayList de String con todas las categorias de la base de datos
+        // Se rellena el ArrayList con todas las categorias de la base de datos
         categorias = Repositorio.consultaCategorias(myContext);
 
         // Obtenemos el booleano que de la pantalla anterior que nos indica si el usuario quiere editar o crear una nueva pregunta
@@ -135,6 +127,7 @@ public class Nueva_Pregunta extends AppCompatActivity implements View.OnClickLis
 
         // Guardamos todos los elementos de la interfaz en variables para usarlas posteriormente
         constraint = findViewById(R.id.constraintLayoutMainActivity);
+
         tituloPregunta = findViewById(R.id.titulo);
         respuestaCorrecta = findViewById(R.id.respuesta_correcta);
         respuestaIncorrecta1 = findViewById(R.id.respuesta_incorrecta1);
@@ -148,15 +141,12 @@ public class Nueva_Pregunta extends AppCompatActivity implements View.OnClickLis
         botonAceptar = findViewById(R.id.button_aceptar);
 
         categoriaSpinner = findViewById(R.id.categoria_spinner);
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, categorias);
+        adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, categorias);
         categoriaSpinner.setAdapter(adapter);
 
         botonAgregarCategoria.setOnClickListener(this);
-
         botonCamara.setOnClickListener(this);
-
         botonGaleria.setOnClickListener(this);
-
         botonAceptar.setOnClickListener(this);
 
         // Si la aplicacion esta en modo editar, rellenamos los EditText con la informacion de la pregunta seleccionada
@@ -189,6 +179,7 @@ public class Nueva_Pregunta extends AppCompatActivity implements View.OnClickLis
 
         switch (view.getId()){
 
+            // Acciones que se realizan al pulsar el boton de aceptar
             case R.id.button_aceptar:
 
                 boolean camposVacios = false;
@@ -196,7 +187,7 @@ public class Nueva_Pregunta extends AppCompatActivity implements View.OnClickLis
                 // Se comprueba que los campos de texto no estan vacios
                 camposVacios = NotEmpty(tituloPregunta, respuestaCorrecta, respuestaIncorrecta1, respuestaIncorrecta2, respuestaIncorrecta3);
 
-                // Si hay el spinner o algun campo de texto esta vacio se crea un snack bar para darle informacion al usuario
+                // Si el spinner o algun campo de texto esta vacio se crea un snack bar para darle informacion al usuario
                 if (camposVacios == true || categorias.isEmpty()){
 
                     Snackbar.make(view, "Debes rellenar todos los campos", Snackbar.LENGTH_LONG)
@@ -204,15 +195,17 @@ public class Nueva_Pregunta extends AppCompatActivity implements View.OnClickLis
                 }else {
 
                     //Se inicializan las variables con la informacion de los campos de texto
-                    enunciado = tituloPregunta.getText().toString();
-                    resCorr = respuestaCorrecta.getText().toString();
-                    resIncorr1 = respuestaIncorrecta1.getText().toString();
-                    resIncorr2 = respuestaIncorrecta2.getText().toString();
-                    resIncorr3 = respuestaIncorrecta3.getText().toString();
-                    categoria = categoriaSpinner.getSelectedItem().toString();
+                    String enunciado = tituloPregunta.getText().toString();
+                    String resCorr = respuestaCorrecta.getText().toString();
+                    String resIncorr1 = respuestaIncorrecta1.getText().toString();
+                    String resIncorr2 = respuestaIncorrecta2.getText().toString();
+                    String resIncorr3 = respuestaIncorrecta3.getText().toString();
+                    String categoria = categoriaSpinner.getSelectedItem().toString();
 
-                    ImageView iv= findViewById(R.id.foto);
-                    BitmapDrawable bmDr=(BitmapDrawable) iv.getDrawable();
+                    ImageView imageView = findViewById(R.id.foto);
+
+                    BitmapDrawable bmDr = (BitmapDrawable) imageView.getDrawable();
+
                     if (bmDr != null){
                         bitmap=bmDr.getBitmap();
                     }else{
@@ -330,7 +323,7 @@ public class Nueva_Pregunta extends AppCompatActivity implements View.OnClickLis
 
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-                ActivityCompat.requestPermissions(Nueva_Pregunta.this, new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE}, CODE_WRITE_EXTERNAL_STORAGE_PERMISSION);
+                ActivityCompat.requestPermissions(Nueva_Pregunta.this, new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE}, ConstantesGlobales.CODE_WRITE_EXTERNAL_STORAGE_PERMISSION);
 
 
             } else {
@@ -354,7 +347,7 @@ public class Nueva_Pregunta extends AppCompatActivity implements View.OnClickLis
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
 
-                ActivityCompat.requestPermissions(Nueva_Pregunta.this, new String[] {Manifest.permission.CAMERA}, CODE_CAMERA_PERMISSION);
+                ActivityCompat.requestPermissions(Nueva_Pregunta.this, new String[] {Manifest.permission.CAMERA}, ConstantesGlobales.CODE_CAMERA_PERMISSION);
 
                 return true;
 
@@ -379,7 +372,7 @@ public class Nueva_Pregunta extends AppCompatActivity implements View.OnClickLis
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         switch (requestCode) {
-            case CODE_WRITE_EXTERNAL_STORAGE_PERMISSION:
+            case ConstantesGlobales.CODE_WRITE_EXTERNAL_STORAGE_PERMISSION:
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
 
@@ -393,7 +386,7 @@ public class Nueva_Pregunta extends AppCompatActivity implements View.OnClickLis
                 break;
 
 
-            case CODE_CAMERA_PERMISSION:
+            case ConstantesGlobales.CODE_CAMERA_PERMISSION:
                 if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
 
