@@ -31,15 +31,13 @@ import java.io.InputStream;
 
 public class Resumen extends AppCompatActivity {
 
-    private TextView preguntasTotales;
-
-    private TextView categoriasTotales;
-
     private Context myContext;
 
-    private static final String TAG="Resumen";
-    final private int CODE_WRITE_EXTERNAL_STORAGE_PERMISSION = 123;
-    final private int CODE_CAMERA_PERMISSION = 1234;
+    private String textoPreguntasTotales;
+    private String textoCategoriasTotales;
+
+    private TextView preguntasTotales;
+    private TextView categoriasTotales;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -73,11 +71,6 @@ public class Resumen extends AppCompatActivity {
                 Log.i("ActionBar", "Settings!");
                 return true;
 
-            case R.id.action_importar:
-                Log.i("ActionBar", "Importar!");
-
-                return true;
-
             case R.id.action_exportar:
                 Log.i("ActionBar", "Exportar!");
 
@@ -103,11 +96,15 @@ public class Resumen extends AppCompatActivity {
             verifyPermission();
         }
 
-
-
         preguntasTotales = findViewById(R.id.preguntasTotales);
 
         categoriasTotales = findViewById(R.id.categoriasTotales);
+
+        textoPreguntasTotales = (String) preguntasTotales.getText();
+
+        textoCategoriasTotales = (String) categoriasTotales.getText();
+
+
 
 
         importarXML();
@@ -118,9 +115,10 @@ public class Resumen extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        preguntasTotales.setText("Hay un total de " + Repositorio.consultarNumeroPreguntas(this) + " preguntas");
 
-        categoriasTotales.setText("Hay un total de " + Repositorio.consultarNumeroCategorias(this) + " categorias");
+        preguntasTotales.setText( textoPreguntasTotales + " " + Repositorio.consultarNumeroPreguntas(this));
+        categoriasTotales.setText( textoCategoriasTotales + " " + Repositorio.consultarNumeroCategorias(this));
+
     }
 
 

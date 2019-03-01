@@ -27,4 +27,7 @@
     <string name="camara"> Camera </string>
     <string name="galeria"> Gallery </string>
 
+    <string name="numeroPreguntas"> The number of total questions is: </string>
+    <string name="numeroCategorias"> The number of total categorys is: </string>
+
 </resources>

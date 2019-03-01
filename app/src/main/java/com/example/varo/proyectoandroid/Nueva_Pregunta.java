@@ -29,6 +29,8 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -217,6 +219,10 @@ public class Nueva_Pregunta extends AppCompatActivity implements View.OnClickLis
                     // Si la app se encuentra en modo creacion, se crea una nueva pregunta y se guarda en el repositorio
                     if (editar == false) {
 
+                        Animation animBtn = AnimationUtils.loadAnimation(myContext, R.anim.fadeout);
+
+                        botonAceptar.startAnimation(animBtn);
+
                         Pregunta nuevaPregunta = new Pregunta(enunciado, categoria, resCorr,
                                 resIncorr1, resIncorr2, resIncorr3, conversorImagen64(bitmap));
 
@@ -224,9 +230,16 @@ public class Nueva_Pregunta extends AppCompatActivity implements View.OnClickLis
 
                         finish();
 
+
+
+
                     }
                     //Si la app se encuentra en modo edicion, se crea una nueva pregunta se actualiza la antigua en el repositorio
                     else {
+
+                        Animation animBtn = AnimationUtils.loadAnimation(myContext, R.anim.fadeout);
+
+                        botonAceptar.startAnimation(animBtn);
 
 
                         Pregunta preguntaActualizada = new Pregunta(codigo, enunciado, categoria, resCorr,

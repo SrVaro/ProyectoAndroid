@@ -23,14 +23,14 @@
             android:id="@+id/preguntasTotales"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="preguntasTotales"
+            android:text="@string/numeroPreguntas"
             android:textAlignment="center" />
 
         <TextView
             android:id="@+id/categoriasTotales"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="categoriasTotales"
+            android:text="@string/numeroCategorias"
             android:textAlignment="center" />
     </LinearLayout>
 
