@@ -229,7 +229,8 @@ public class Nueva_Pregunta extends AppCompatActivity implements View.OnClickLis
                     else {
 
 
-                        Pregunta preguntaActualizada = new Pregunta(enunciado, categoria, resCorr, resIncorr1, resIncorr2, resIncorr3, conversorImagen64(bitmap));
+                        Pregunta preguntaActualizada = new Pregunta(codigo, enunciado, categoria, resCorr,
+                                resIncorr1, resIncorr2, resIncorr3, conversorImagen64(bitmap));
 
                         Repositorio.editarPregunta(myContext, preguntaActualizada);
 
