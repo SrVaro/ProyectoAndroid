@@ -13,7 +13,7 @@
         android:layout_width="190dp"
         android:layout_height="46dp"
         android:layout_marginStart="32dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
         android:hint="@string/titulo"
         android:inputType="textPersonName"
@@ -45,8 +45,8 @@
 
     <EditText
         android:id="@+id/respuesta_incorrecta1"
-        android:layout_width="265dp"
-        android:layout_height="44dp"
+        android:layout_width="262dp"
+        android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="17dp"
         android:layout_marginEnd="8dp"
@@ -59,7 +59,7 @@
 
     <EditText
         android:id="@+id/respuesta_incorrecta2"
-        android:layout_width="273dp"
+        android:layout_width="262dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginTop="17dp"
@@ -73,10 +73,10 @@
 
     <EditText
         android:id="@+id/respuesta_incorrecta3"
-        android:layout_width="282dp"
+        android:layout_width="262dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="18dp"
+        android:layout_marginTop="17dp"
         android:layout_marginEnd="8dp"
         android:ems="10"
         android:hint="@string/respuesta_incorrecta"
@@ -89,10 +89,22 @@
         android:id="@+id/button_aceptar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="84dp"
         android:text="@string/aceptar"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/respuesta_incorrecta3" />
+
+    <Button
+        android:id="@+id/button_eliminar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/eliminar"
+        app:layout_constraintEnd_toStartOf="@+id/button_aceptar"
+        app:layout_constraintHorizontal_bias="0.577"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/respuesta_incorrecta3" />
 
@@ -110,8 +122,8 @@
         android:id="@+id/camara"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="72dp"
-        android:layout_marginTop="184dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginTop="148dp"
         android:text="@string/camara"
         app:layout_constraintStart_toEndOf="@+id/agregarCategoria"
         app:layout_constraintTop_toTopOf="parent" />
@@ -120,8 +132,8 @@
         android:id="@+id/galeria"
         android:layout_width="wrap_content"
         android:layout_height="47dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="184dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="148dp"
         android:text="@string/galeria"
         app:layout_constraintStart_toEndOf="@+id/camara"
         app:layout_constraintTop_toTopOf="parent" />
@@ -136,7 +148,7 @@
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.232"
+        app:layout_constraintHorizontal_bias="0.246"
         app:layout_constraintStart_toEndOf="@+id/titulo"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"

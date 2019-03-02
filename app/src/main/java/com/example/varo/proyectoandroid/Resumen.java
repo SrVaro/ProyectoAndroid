@@ -9,15 +9,10 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.RequiresApi;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.AbsListView;
 import android.widget.TextView;
 
 import org.xmlpull.v1.XmlPullParser;
@@ -93,7 +88,7 @@ public class Resumen extends AppCompatActivity {
         myContext = this;
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-            verifyPermission();
+            comprobarPermisosCamaraEscritura();
         }
 
         preguntasTotales = findViewById(R.id.preguntasTotales);
@@ -104,9 +99,6 @@ public class Resumen extends AppCompatActivity {
 
         textoCategoriasTotales = (String) categoriasTotales.getText();
 
-
-
-
         importarXML();
 
         }
@@ -114,7 +106,6 @@ public class Resumen extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-
 
         preguntasTotales.setText( textoPreguntasTotales + " " + Repositorio.consultarNumeroPreguntas(this));
         categoriasTotales.setText( textoCategoriasTotales + " " + Repositorio.consultarNumeroCategorias(this));
@@ -178,55 +169,36 @@ public class Resumen extends AppCompatActivity {
 
                             case XmlPullParser.TEXT:
 
-                                System.out.println("tag: "+ tag);
-
                                 if(tag.equals("text"))
                                 {
+                                    switch(contador){
+                                        case 0:
+                                            categoria= parser.getText();
+                                            contador++;
+                                        break;
 
+                                        case 1:
+                                            enunciado= parser.getText();
+                                            contador++;
+                                        break;
 
+                                        case 3:
+                                            correcta= parser.getText();
+                                            contador++;
+                                        break;
 
-                                    if(contador==0){
-                                        categoria= parser.getText();
-                                        System.out.println("categoria: "+ categoria);
-                                        contador++;
-                                    }
-                                    else if(contador==1){
-                                        enunciado= parser.getText();
-                                        System.out.println("Enunciado: "+ enunciado);
-                                        contador++;
+                                        case 4:
+                                            incorrecta= parser.getText();
+                                            contador++;
+                                        break;
 
-                                    }
-                                    else if(contador==2){
+                                        case 5:
+                                            incorrecta2= parser.getText();
+                                            contador++;
+                                        break;
 
-                                        contador++;
-                                    }
-
-                                    else if(contador==3){
-                                        correcta= parser.getText();
-                                        System.out.println("Correcta: "+ correcta);
-                                        contador++;
-
-                                    }
-                                    else if(contador==4){
-                                        incorrecta= parser.getText();
-                                        System.out.println("Incorrecta1: "+ incorrecta);
-                                        contador++;
-
-                                    }
-                                    else if(contador==5){
-                                        incorrecta2= parser.getText();
-                                        System.out.println("Incorrecta2: "+ incorrecta2);
-
-
-                                        contador++;
-
-                                    }
-                                    else if(contador==6){
-                                        incorrecta3= parser.getText();
-                                        System.out.println("Incorrecta3: "+ incorrecta3);
-
-
-                                        //Como es el último dato que recuperamos de la pregunta la añadimos a la base de datos
+                                        case 6:
+                                            incorrecta3= parser.getText();
 
                                         if(foto == null){
 
@@ -244,19 +216,14 @@ public class Resumen extends AppCompatActivity {
                                         contador=0;
 
                                     }
-                                    else{
-                                        System.out.println("Error insertando a la BD");
-                                    }
+
 
                                 }
 
                                 if(tag.equals("file"))
                                 {
                                     foto= parser.getText();
-                                    System.out.println("Imagen: "+ foto);
-
                                 }
-
 
                                 tag="";
                                 break;
@@ -339,7 +306,7 @@ public class Resumen extends AppCompatActivity {
     }
 
     @RequiresApi(api = Build.VERSION_CODES.M)
-    private void verifyPermission() {
+    private void comprobarPermisosCamaraEscritura() {
         int permsRequestCode = 100;
         String[] perms = {Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CAMERA};
         int writePermission = checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE);

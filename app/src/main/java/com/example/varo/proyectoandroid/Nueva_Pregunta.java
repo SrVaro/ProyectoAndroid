@@ -1,7 +1,6 @@
 package com.example.varo.proyectoandroid;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -15,7 +14,6 @@ import android.os.Build;
 import android.os.Environment;
 import android.os.StrictMode;
 import android.provider.MediaStore;
-import android.support.annotation.RequiresApi;
 import android.support.constraint.ConstraintLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
@@ -78,6 +76,7 @@ public class Nueva_Pregunta extends AppCompatActivity implements View.OnClickLis
     private Button botonGaleria;
     private Button botonCamara;
     private Button botonAceptar;
+    private Button botonEliminar;
 
     private Spinner categoriaSpinner;
 
@@ -141,6 +140,9 @@ public class Nueva_Pregunta extends AppCompatActivity implements View.OnClickLis
         botonAgregarCategoria = findViewById(R.id.agregarCategoria);
         botonCamara = findViewById(R.id.camara);
         botonAceptar = findViewById(R.id.button_aceptar);
+        botonEliminar = findViewById(R.id.button_eliminar);
+
+        botonEliminar.setEnabled(false);
 
         categoriaSpinner = findViewById(R.id.categoria_spinner);
         adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, categorias);
@@ -150,9 +152,16 @@ public class Nueva_Pregunta extends AppCompatActivity implements View.OnClickLis
         botonCamara.setOnClickListener(this);
         botonGaleria.setOnClickListener(this);
         botonAceptar.setOnClickListener(this);
+        botonEliminar.setOnClickListener(this);
 
         // Si la aplicacion esta en modo editar, rellenamos los EditText con la informacion de la pregunta seleccionada
         if (editar) {
+
+            // En modo editar se activa el boton de eliminar
+            botonEliminar.setEnabled(true);
+
+            // Se cambia el texto del boton aceptar por editar
+            botonAceptar.setText(R.string.editar);
 
             // Obtenemos el codigo de la pregunta que el usuario ha seleccionado
             codigo = getIntent().getExtras().getInt("codigo");
@@ -192,8 +201,8 @@ public class Nueva_Pregunta extends AppCompatActivity implements View.OnClickLis
                 // Si el spinner o algun campo de texto esta vacio se crea un snack bar para darle informacion al usuario
                 if (camposVacios == true || categorias.isEmpty()){
 
-                    Snackbar.make(view, "Debes rellenar todos los campos", Snackbar.LENGTH_LONG)
-                            .show();
+                    Snackbar.make(view, "Debes rellenar todos los campos", Snackbar.LENGTH_LONG).show();
+
                 }else {
 
                     //Se inicializan las variables con la informacion de los campos de texto
@@ -304,13 +313,21 @@ public class Nueva_Pregunta extends AppCompatActivity implements View.OnClickLis
 
             case R.id.camara:
 
-                takePicture();
+                iniciarCamara();
 
                 break;
 
             case R.id.galeria:
 
-                selectPicture();
+                iniciarGaleria();
+
+                break;
+
+            case R.id.button_eliminar:
+
+                Repositorio.eliminarPregunta(myContext, codigo);
+
+                finish();
 
                 break;
 
@@ -416,7 +433,10 @@ public class Nueva_Pregunta extends AppCompatActivity implements View.OnClickLis
     }
 
 
-    private void takePicture() {
+    /**
+     * Se abre el intent de la camara
+     */
+    private void iniciarCamara() {
 
         try {
 
@@ -446,7 +466,7 @@ public class Nueva_Pregunta extends AppCompatActivity implements View.OnClickLis
 
             } catch (IOException ex) {
 
-                Log.d("imageViewFoto no hecha", "Error: " + ex);
+                Log.d("Foto", "Error: " + ex);
                 ConstraintLayout constraintLayout = findViewById(R.id.constraintLayoutMainActivity);
                 Snackbar snackbar = Snackbar
                         .make(constraintLayout, "Error", Snackbar.LENGTH_LONG);
@@ -454,8 +474,10 @@ public class Nueva_Pregunta extends AppCompatActivity implements View.OnClickLis
             }
         }
 
-
-    private void selectPicture(){
+    /**
+     * Se abre el intent de la galeria
+     */
+    private void iniciarGaleria(){
         // Se le pide al sistema una imagen del dispositivo
         Intent intent = new Intent();
         intent.setType("image/*");
@@ -465,6 +487,10 @@ public class Nueva_Pregunta extends AppCompatActivity implements View.OnClickLis
                 REQUEST_SELECT_IMAGE);
     }
 
+    /**
+     *
+     * @return Devuelve un codigo a partir de la fecha y hora del telefono
+     */
     private String getFileCode()
     {
         // Se crea un código a partir de la fecha y hora
@@ -510,10 +536,15 @@ public class Nueva_Pregunta extends AppCompatActivity implements View.OnClickLis
                     if (selectedPath != null) {
                         // Se leen los bytes de la imagen
                         InputStream imageStream = null;
+
                         try {
+
                             imageStream = getContentResolver().openInputStream(selectedImage);
+
                         } catch (FileNotFoundException e) {
+
                             e.printStackTrace();
+
                         }
 
                         // Se transformam los bytes de la imagen a un Bitmap
@@ -529,6 +560,11 @@ public class Nueva_Pregunta extends AppCompatActivity implements View.OnClickLis
         }
     }
 
+    /**
+     *
+     * @param bm
+     * @return Devuelve un string con la imagen en base64
+     */
     public static String conversorImagen64(Bitmap bm){
         String encodedImage="";
         if(bm!=null) {

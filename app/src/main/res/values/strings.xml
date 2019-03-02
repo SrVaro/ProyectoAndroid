@@ -23,11 +23,15 @@
     <string name="agregar"> Añadir </string>
     <string name="aceptar"> Aceptar </string>
 
+    <string name="editar"> Editar </string>
+
     <string name="camara"> Camara </string>
     <string name="galeria"> Galeria </string>
 
     <string name="numeroPreguntas"> El numero de preguntas totales es: </string>
     <string name="numeroCategorias"> El numero de categorias totales es: </string>
+
+    <string name="eliminar"> Eliminar </string>
 
     <string name="app_name" translatable="false">App-Quiz</string>
 

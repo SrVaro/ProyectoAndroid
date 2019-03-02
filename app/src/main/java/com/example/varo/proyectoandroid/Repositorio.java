@@ -398,6 +398,27 @@ public class Repositorio {
     /**
      *
      * @param myContext
+     * @param codigo
+     *
+     * Se elimina la pregunta correspondiente al codigo recibido de la base de datos
+     */
+    public static void eliminarPregunta(Context myContext, int codigo){
+
+        // Se abre la conexion con la base de datos
+        DatabaseSQLiteHelper DBPreguntas = new DatabaseSQLiteHelper(myContext, ConstantesGlobales.nombreDB, null, 1);
+
+        SQLiteDatabase db = DBPreguntas.getWritableDatabase();
+
+        db.execSQL("DELETE FROM '" + ConstantesGlobales.nombreTabla + "' WHERE codigo='" + codigo + "' ");
+
+        // Se cierra la conexion con la base de datos
+        db.close();
+
+    }
+
+    /**
+     *
+     * @param myContext
      * @return Devuelve el numero de categorias distintas que existan
      */
     public static int consultarNumeroCategorias(Context myContext) {

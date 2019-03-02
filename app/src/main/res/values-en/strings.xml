@@ -24,10 +24,14 @@
     <string name="agregar"> Add </string>
     <string name="aceptar"> Accept </string>
 
+    <string name="editar"> Edit </string>
+
     <string name="camara"> Camera </string>
     <string name="galeria"> Gallery </string>
 
     <string name="numeroPreguntas"> The number of total questions is: </string>
     <string name="numeroCategorias"> The number of total categorys is: </string>
+
+    <string name="eliminar"> Delete </string>
 
 </resources>
