@@ -34,4 +34,6 @@
 
     <string name="eliminar"> Delete </string>
 
+    <string name="alert_eliminar"> Are you sure? </string>
+
 </resources>

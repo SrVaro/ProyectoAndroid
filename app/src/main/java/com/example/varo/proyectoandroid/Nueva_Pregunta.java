@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
@@ -46,6 +47,8 @@ import java.util.Date;
 import java.util.HashSet;
 
 public class Nueva_Pregunta extends AppCompatActivity implements View.OnClickListener {
+
+    private static final String TAG = "Nueva_Pregunta_Activity";
 
     private Context myContext;
 
@@ -95,11 +98,11 @@ public class Nueva_Pregunta extends AppCompatActivity implements View.OnClickLis
         switch (item.getItemId()){
 
             case R.id.action_acerca:
-                Log.i("ActionBar", "Acerca de!");
+                MyLog.i("ActionBar", "Acerca de!");
                 return true;
 
             case R.id.action_settings:
-                Log.i("ActionBar", "Settings!");
+                MyLog.i("ActionBar", "Settings!");
                 return true;
 
             default:
@@ -153,6 +156,7 @@ public class Nueva_Pregunta extends AppCompatActivity implements View.OnClickLis
         botonGaleria.setOnClickListener(this);
         botonAceptar.setOnClickListener(this);
         botonEliminar.setOnClickListener(this);
+        imageViewFoto.setOnClickListener(this);
 
         // Si la aplicacion esta en modo editar, rellenamos los EditText con la informacion de la pregunta seleccionada
         if (editar) {
@@ -325,116 +329,63 @@ public class Nueva_Pregunta extends AppCompatActivity implements View.OnClickLis
 
             case R.id.button_eliminar:
 
+               comprobarEliminar();
+
+               break;
+
+            case R.id.foto:
+
+                ImageView imageView = findViewById(R.id.foto);
+
+                imageView.setImageDrawable(Drawable.createFromPath("@android:drawable/ic_menu_gallery"));
+
+                bitmap= null;
+
+                break;
+
+
+
+        }
+
+    }
+
+    /**
+     * Se abre un alert dialog para que el usuario confirme la eliminacion de la pregunta
+     */
+    private void comprobarEliminar(){
+
+        AlertDialog.Builder builder = new AlertDialog.Builder( myContext);
+
+        builder.setCancelable(false);
+
+        builder.setPositiveButton(R.string.aceptar, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+
                 Repositorio.eliminarPregunta(myContext, codigo);
 
                 finish();
 
-                break;
-
-        }
-
-    }
-
-
-
-
-    // A partir de Marshmallow (6.0) se pide aceptar o rechazar el permiso en tiempo de ejecución
-    // En las versiones anteriores no es posible hacerlo
-    // Una vez que se pide aceptar o rechazar el permiso se ejecuta el método "onRequestPermissionsResult" para manejar la respuesta
-    // Si el usuario marca "No preguntar más" no se volverá a mostrar este diálogo
-    private void compruebaPermisosEscritura() {
-        int WriteExternalStoragePermission = ContextCompat.checkSelfPermission(myContext, Manifest.permission.WRITE_EXTERNAL_STORAGE);
-
-        Log.d("Crear editar", "WRITE_EXTERNAL_STORAGE Permission: " + WriteExternalStoragePermission);
-
-
-        if (WriteExternalStoragePermission != PackageManager.PERMISSION_GRANTED ) {
-
-
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
-                ActivityCompat.requestPermissions(Nueva_Pregunta.this, new String[] {Manifest.permission.WRITE_EXTERNAL_STORAGE}, ConstantesGlobales.CODE_WRITE_EXTERNAL_STORAGE_PERMISSION);
-
-
-            } else {
-
-                Log.e("Permisos: ","Rechazados");
+            }
+        });
+        builder.setNegativeButton(R.string.cancelar, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
 
             }
-        } else {
-
-            Log.e("Permisos: ","Rechazados");
-        }
-    }
-
-    private boolean compruebaPermisosCamera(){
-        int CameraPermission = ContextCompat.checkSelfPermission(myContext, Manifest.permission.CAMERA);
-        Log.d("Crear editar", "WRITE_EXTERNAL_STORAGE Permission: " + CameraPermission);
+        });
 
 
-        if (CameraPermission != PackageManager.PERMISSION_GRANTED) {
+        builder.setMessage(R.string.alert_eliminar)
+                .setTitle(R.string.eliminar);
 
+        AlertDialog dialog = builder.create();
 
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
+        dialog.show();
 
-                ActivityCompat.requestPermissions(Nueva_Pregunta.this, new String[] {Manifest.permission.CAMERA}, ConstantesGlobales.CODE_CAMERA_PERMISSION);
-
-                return true;
-
-            } else {
-
-                Log.e("Permisos: ","Rechazados");
-
-                return false;
-
-            }
-        } else {
-
-            Log.e("Permisos: ","Rechazados");
-
-            return false;
-        }
-
-    }
-
-
-    //Maneja la respuesta del compruebaPermisos
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        switch (requestCode) {
-            case ConstantesGlobales.CODE_WRITE_EXTERNAL_STORAGE_PERMISSION:
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-
-
-                } else {
-
-                    Log.e("Permisos: ","Rechazados");
-
-                }
-
-                break;
-
-
-            case ConstantesGlobales.CODE_CAMERA_PERMISSION:
-                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-
-
-
-                } else {
-
-                    Log.e("Permisos: ","Rechazados");
-
-                }
-
-                break;
-            default:
-                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-        }
     }
 
 
     /**
-     * Se abre el intent de la camara
+     * Se inicia la camara del dispositivo para tomar una fotografia
      */
     private void iniciarCamara() {
 
@@ -455,18 +406,20 @@ public class Nueva_Pregunta extends AppCompatActivity implements View.OnClickLis
                 StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
                 StrictMode.setVmPolicy(builder.build());
                 uri = Uri.fromFile(fileFoto);
-                Log.d("foto hecha", uri.getPath().toString());
+                MyLog.d("foto hecha", uri.getPath().toString());
 
                 // Se crea la comunicación con la cámara
                 Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
                 // Se le indica dónde almacenar la fotografía
                 cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, uri);
+
                 // Se lanza la cámara y se espera su resultado
                 startActivityForResult(cameraIntent, REQUEST_CAPTURE_IMAGE);
 
             } catch (IOException ex) {
 
-                Log.d("Foto", "Error: " + ex);
+                MyLog.d("Foto", "Error: " + ex);
                 ConstraintLayout constraintLayout = findViewById(R.id.constraintLayoutMainActivity);
                 Snackbar snackbar = Snackbar
                         .make(constraintLayout, "Error", Snackbar.LENGTH_LONG);
@@ -601,6 +554,48 @@ public class Nueva_Pregunta extends AppCompatActivity implements View.OnClickLis
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return false;
+    }
+
+    @Override
+    protected void onStart() {
+        MyLog.d(TAG, "Iniciando OnStart");
+        super.onStart();
+        MyLog.d(TAG, "Finalizando OnStart");
+    }
+
+    @Override
+    protected void onResume() {
+        MyLog.d(TAG, "Iniciando OnResume");
+        super.onResume();
+        MyLog.d(TAG, "Finalizando OnResume");
+    }
+
+    @Override
+    protected void onPause() {
+        MyLog.d(TAG, "Iniciando OnPause");
+        super.onPause();
+        MyLog.d(TAG, "Finalizando OnPause");
+    }
+
+    @Override
+    protected void onStop() {
+        MyLog.d(TAG, "Iniciando OnStop");
+        super.onStop();
+        MyLog.d(TAG, "Finalizando OnStop");
+    }
+
+    @Override
+    protected void onRestart() {
+        MyLog.d(TAG, "Iniciando OnRestart");
+        super.onRestart();
+        MyLog.d(TAG, "Finalizando OnRestart");
+    }
+
+    @Override
+    protected void onDestroy() {
+        MyLog.d(TAG, "Iniciando OnDestroy");
+        super.onDestroy();
+        MyLog.d(TAG, "Finalizando OnDestroy");
     }
 
 

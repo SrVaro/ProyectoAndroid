@@ -1,9 +1,11 @@
 package com.example.varo.proyectoandroid;
 
 import android.Manifest;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.net.ConnectivityManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -26,6 +28,8 @@ import java.io.InputStream;
 
 public class Resumen extends AppCompatActivity {
 
+    private static final String TAG = "Resumen_Activity";
+
     private Context myContext;
 
     private String textoPreguntasTotales;
@@ -33,6 +37,8 @@ public class Resumen extends AppCompatActivity {
 
     private TextView preguntasTotales;
     private TextView categoriasTotales;
+
+    private BroadcastReceiver receiver;
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -47,27 +53,27 @@ public class Resumen extends AppCompatActivity {
         switch (item.getItemId()){
 
             case R.id.action_buscar:
-                Log.i("ActionBar", "Buscar!");
+                MyLog.i("ActionBar", "Buscar!");
                 return true;
 
             case R.id.action_preguntas:
-                Log.i("ActionBar", "Listado_Preguntas!");
+                MyLog.i("ActionBar", "Listado_Preguntas!");
                 Intent it1 = new Intent(Resumen.this, Listado_Preguntas.class);
                 startActivity(it1);
                 return true;
 
             case R.id.action_acerca:
-                Log.i("ActionBar", "Acerca de!");
+                MyLog.i("ActionBar", "Acerca de!");
                 Intent it2 = new Intent(Resumen.this, AcercaDe.class);
                 startActivity(it2);
                 return true;
 
             case R.id.action_settings:
-                Log.i("ActionBar", "Settings!");
+                MyLog.i("ActionBar", "Settings!");
                 return true;
 
             case R.id.action_exportar:
-                Log.i("ActionBar", "Exportar!");
+                MyLog.i("ActionBar", "Exportar!");
 
                 exportarXML();
 
@@ -84,8 +90,9 @@ public class Resumen extends AppCompatActivity {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_resumen);
 
-
         myContext = this;
+
+        ConnectivityManager connectivityManager = (ConnectivityManager) myContext.getSystemService(Context.CONNECTIVITY_SERVICE);
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M){
             comprobarPermisosCamaraEscritura();
@@ -105,10 +112,15 @@ public class Resumen extends AppCompatActivity {
 
     @Override
     protected void onResume() {
+
+        MyLog.d(TAG, "Iniciando OnResume");
+
         super.onResume();
 
         preguntasTotales.setText( textoPreguntasTotales + " " + Repositorio.consultarNumeroPreguntas(this));
-        categoriasTotales.setText( textoCategoriasTotales + " " + Repositorio.consultarNumeroCategorias(this));
+        categoriasTotales.setText( textoCategoriasTotales + " " + Repositorio.consultaCategorias(this).size());
+
+        MyLog.d(TAG, "Finalizando OnResume");
 
     }
 
@@ -275,7 +287,7 @@ public class Resumen extends AppCompatActivity {
 
             FileWriter fw=new FileWriter(file);
             //Escribimos en el fichero un String
-            Log.d("aqui estoy",Repositorio.CreateXMLString(myContext));
+            MyLog.d("aqui estoy",Repositorio.CreateXMLString(myContext));
             fw.write(Repositorio.CreateXMLString(myContext));
 
 
@@ -287,7 +299,7 @@ public class Resumen extends AppCompatActivity {
         }
         catch (Exception ex)
         {
-            Log.e("Ficheros", "Error al escribir fichero a memoria interna");
+            MyLog.e("Ficheros", "Error al escribir fichero a memoria interna");
         }
 
 
@@ -332,7 +344,7 @@ public class Resumen extends AppCompatActivity {
 
                 } else {
 
-                    Log.e("Permisos: ", "Rechazados");
+                    MyLog.e("Permisos: ", "Rechazados");
 
                 }
 
@@ -341,12 +353,47 @@ public class Resumen extends AppCompatActivity {
 
                 } else {
 
-                    Log.e("Permisos: ", "Rechazados");
+                    MyLog.e("Permisos: ", "Rechazados");
 
                 }
 
                 break;
         }
+    }
+
+    @Override
+    protected void onStart() {
+        MyLog.d(TAG, "Iniciando OnStart");
+        super.onStart();
+        MyLog.d(TAG, "Finalizando OnStart");
+    }
+
+    @Override
+    protected void onPause() {
+        MyLog.d(TAG, "Iniciando OnPause");
+        super.onPause();
+        MyLog.d(TAG, "Finalizando OnPause");
+    }
+
+    @Override
+    protected void onStop() {
+        MyLog.d(TAG, "Iniciando OnStop");
+        super.onStop();
+        MyLog.d(TAG, "Finalizando OnStop");
+    }
+
+    @Override
+    protected void onRestart() {
+        MyLog.d(TAG, "Iniciando OnRestart");
+        super.onRestart();
+        MyLog.d(TAG, "Finalizando OnRestart");
+    }
+
+    @Override
+    protected void onDestroy() {
+        MyLog.d(TAG, "Iniciando OnDestroy");
+        super.onDestroy();
+        MyLog.d(TAG, "Finalizando OnDestroy");
     }
 
 

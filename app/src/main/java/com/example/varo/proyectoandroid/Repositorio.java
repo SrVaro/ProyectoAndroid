@@ -416,30 +416,4 @@ public class Repositorio {
 
     }
 
-    /**
-     *
-     * @param myContext
-     * @return Devuelve el numero de categorias distintas que existan
-     */
-    public static int consultarNumeroCategorias(Context myContext) {
-
-        // Se abre la conexion con la base de datos
-        DatabaseSQLiteHelper DBPreguntas = new DatabaseSQLiteHelper(myContext, "DBPreguntas", null, 1);
-
-        SQLiteDatabase db = DBPreguntas.getReadableDatabase();
-
-        int total;
-
-        // Se ejecuta la consulta de la base de datos
-        Cursor c = db.rawQuery("SELECT DISTINCT COUNT(*) " + ConstantesGlobales.columnaCategoria + " FROM " + ConstantesGlobales.nombreTabla + " ", null);
-
-        c.moveToFirst();
-
-        total = c.getInt(0);
-
-        return total;
-
-    }
-
-
 }

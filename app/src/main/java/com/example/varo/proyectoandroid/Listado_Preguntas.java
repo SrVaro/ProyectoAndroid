@@ -10,6 +10,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -18,6 +20,8 @@ import java.util.ArrayList;
 public class Listado_Preguntas extends AppCompatActivity {
 
     ArrayList<Pregunta> listaPreguntas = new ArrayList<>();
+
+    private static final String TAG = "Listado_Preguntas_Activity";
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -33,19 +37,19 @@ public class Listado_Preguntas extends AppCompatActivity {
         switch (item.getItemId()){
 
             case R.id.action_buscar:
-                Log.i("ActionBar", "Buscar!");
+                MyLog.i("ActionBar", "Buscar!");
                 return true;
 
             case R.id.action_preguntas:
-                Log.i("ActionBar", "Listado_Preguntas!");
+                MyLog.i("ActionBar", "Listado_Preguntas!");
                 return true;
 
             case R.id.action_acerca:
-                Log.i("ActionBar", "Acerca de!");
+                MyLog.i("ActionBar", "Acerca de!");
                 return true;
 
             case R.id.action_settings:
-                Log.i("ActionBar", "Settings!");
+                MyLog.i("ActionBar", "Settings!");
                 return true;
 
             default:
@@ -66,6 +70,9 @@ public class Listado_Preguntas extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+
+
                 Intent it = new Intent(Listado_Preguntas.this, Nueva_Pregunta.class);
                 it.putExtra("editar", false );
                 startActivity(it);
@@ -75,17 +82,19 @@ public class Listado_Preguntas extends AppCompatActivity {
 
     @Override
     protected void onResume() {
+
+        MyLog.d(TAG, "Iniciando OnResume");
+
         super.onResume();
 
         // Se rellena el ArrayList de Preguntas con las recuperadas de la base de datos
         listaPreguntas = Repositorio.recuperarPreguntas(this);
         final RecyclerView recyclerView = findViewById(R.id.rv);
 
-        // Si la lista de preguntas no es nulla
+        // Si la lista de preguntas no es nula
         if (listaPreguntas != null){
 
             TextView informacion = findViewById(R.id.textView);
-            informacion.setVisibility(View.INVISIBLE);
             Adapter ad = new Adapter(listaPreguntas);
 
             // Al seleccionar un card se pasa a la vista Nueva_Pregunta
@@ -116,12 +125,49 @@ public class Listado_Preguntas extends AppCompatActivity {
             informacion.setVisibility(View.VISIBLE);
         }
 
+        MyLog.d(TAG, "Finalizando OnResume");
+
     }
 
     @Override
     public boolean onSupportNavigateUp() {
         onBackPressed();
         return false;
+    }
+
+    @Override
+    protected void onStart() {
+        MyLog.d(TAG, "Iniciando OnStart");
+        super.onStart();
+        MyLog.d(TAG, "Finalizando OnStart");
+    }
+
+    @Override
+    protected void onPause() {
+        MyLog.d(TAG, "Iniciando OnPause");
+        super.onPause();
+        MyLog.d(TAG, "Finalizando OnPause");
+    }
+
+    @Override
+    protected void onStop() {
+        MyLog.d(TAG, "Iniciando OnStop");
+        super.onStop();
+        MyLog.d(TAG, "Finalizando OnStop");
+    }
+
+    @Override
+    protected void onRestart() {
+        MyLog.d(TAG, "Iniciando OnRestart");
+        super.onRestart();
+        MyLog.d(TAG, "Finalizando OnRestart");
+    }
+
+    @Override
+    protected void onDestroy() {
+        MyLog.d(TAG, "Iniciando OnDestroy");
+        super.onDestroy();
+        MyLog.d(TAG, "Finalizando OnDestroy");
     }
 
 }
